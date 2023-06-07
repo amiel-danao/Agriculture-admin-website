@@ -14,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({
@@ -33,6 +34,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
   late int customerCount = 0;
   late List<int> genderCount = [];
+  late List<String> genderLabels = ["Female", "Male"];
+  late int employeeCount = 0;
+  late int cropsCount = 0;
+
+  List<_ChartData> chartData = <_ChartData>[];
 
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
@@ -109,20 +115,133 @@ class _HomePageWidgetState extends State<HomePageWidget>
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
 
     fetchCounts();
+
+    getDataFromFireStore()
+    .then((results) {
+      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+        setState(() {});
+      });
+    });
   }
 
+  Future<void> getDataFromFireStore() async {
+    // var snapShotsValue =
+    // await FirebaseFirestore.instance.collection("Profiles").get();
+    var minDate;
+
+    await FirebaseFirestore.instance.collection("Profiles").orderBy("dateCreated").limit(1).get().then((value) {
+      minDate = value.docs[0].data()['dateCreated'];
+    });
+
+    print(minDate);
+
+    DateTime endDate = DateTime.now();
+
+    // Convert the DateTime objects to Firestore Timestamps
+    Timestamp endTimestamp = Timestamp.fromDate(endDate);
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('Profiles')
+        .where('dateCreated', isGreaterThanOrEqualTo: minDate)
+        .where('dateCreated', isLessThanOrEqualTo: endTimestamp)
+        .orderBy('dateCreated')
+        .get();
+
+    List<_ChartData> list = [];
+
+    var result = await countDocumentsByDate();
+
+    result.forEach((date, count) {
+      var newChartData = _ChartData(
+          // x: DateTime.fromMicrosecondsSinceEpoch(date.millisecondsSinceEpoch),
+          x: date,
+          y: count);
+      list.add(newChartData);
+      // Perform additional operations with the date and count
+    });
+
+    setState(() {
+      chartData = list;
+    });
+  }
+
+  Future<Map<String, int>> countDocumentsByDate() async {
+    // Get a reference to the Firestore collection
+    CollectionReference<Map<String, dynamic>> collection =
+    FirebaseFirestore.instance.collection('Profiles');
+
+    // Retrieve all documents from the collection
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await collection.get();
+
+    // Initialize a map to store the counts per date
+    Map<String, int> countsByDate = {};
+
+    // Process the query results
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+        querySnapshot.docs;
+
+    for (var doc in documents) {
+      // Access the document data using doc.data()
+      // Example: String documentId = doc.id;
+      //          Timestamp createdAt = doc.data()['dateCreated'];
+      //          ...
+
+      // Get the dateCreated field value as a DateTime object
+      Timestamp timestamp = doc.data()['dateCreated'];
+      DateTime createdDate = timestamp.toDate();
+      String dateString = DateFormat('yyyy-MM-dd').format(createdDate);
+
+      countsByDate.update(
+        dateString,
+            (value) => ++value,
+        ifAbsent: () => 1,
+      );
+      // Increment the count for the respective date
+      // if (countsByDate.containsKey(timestamp)) {
+      //   var count = countsByDate[dateString];
+      //   countsByDate[dateString] = count + 1;
+      //
+      // } else {
+      //   countsByDate[dateString] = 1;
+      // }
+    }
+
+    return countsByDate;
+  }
+
+
+
   void fetchCounts() async{
-    await FirebaseFirestore.instance.collection("users").count().get().then((value) {
+    await FirebaseFirestore.instance.collection("Profiles").count().get().then((value) {
       setState(() {
         customerCount = value.count;
+      });
+    });
+
+    await FirebaseFirestore.instance.collection("users").count().get().then((value) {
+      setState(() {
+        employeeCount = value.count;
+      });
+    });
+
+    await FirebaseFirestore.instance.collection("crops").count().get().then((value) {
+      setState(() {
+        cropsCount = value.count;
       });
     });
 
     var male = 0;
     var female = 0;
 
+    await FirebaseFirestore.instance.collection("Profiles").where("gender", isEqualTo: "male").count().get().then((value) {
+      male = value.count;
+    });
+
+    await FirebaseFirestore.instance.collection("Profiles").where("gender", isEqualTo: "female").count().get().then((value) {
+      female = value.count;
+    });
+
     setState(() {
-      genderCount = [male, female];
+      genderCount = [female, male];
     });
   }
 
@@ -374,7 +493,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                     .fromSTEB(
                                                         16.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  '1',
+                                                  employeeCount.toString(),
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -460,7 +579,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                     .fromSTEB(
                                                         16.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  '0',
+                                                  cropsCount.toString(),
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -478,94 +597,82 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ),
                             ],
                           ),
+                          Container(
+                            height: 300.0,
+                            child:
+                            SfCartesianChart(
+                                title: ChartTitle(text: 'Registration chart'),
+                                primaryXAxis: CategoryAxis(),
+                                primaryYAxis: NumericAxis(
+                                    interval: 1,
+                                    title: AxisTitle(text: 'New users'),
+                                    rangePadding: ChartRangePadding.additional,
+                                    // Assigned a name for the y-axis for customization purposes
+                                    name: 'primaryYAxis'
+                                ),
+                                series: <ChartSeries<_ChartData, String>>[
+                                  LineSeries<_ChartData, String>(
+                                    // Assigned the data source for the chart series.
+                                      dataSource: chartData,
+                                      xValueMapper: (_ChartData data, _) => data.x,
+                                      yValueMapper: (_ChartData data, _) {
+                                        // Converted the date time y-values from the chart data source to millisecondSinceEpoch
+                                        // integer values and then mapped to numeric y-axis.
+                                        return data.y;
+                                      },
+                                      dataLabelSettings: DataLabelSettings(isVisible: true),
+                                      markerSettings: MarkerSettings(isVisible: true))
+                                ]
+                            )
+
+                          ),
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 0.0),
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    height: 300.0,
-                                    child: FlutterFlowLineChart(
-                                      data: [
-                                        FFLineChartData(
-                                          xData: List.generate(
-                                              random_data.randomInteger(0, 50),
-                                              (index) => random_data
-                                                  .randomInteger(0, 10)),
-                                          yData: List.generate(
-                                              random_data.randomInteger(0, 0),
-                                              (index) =>
-                                                  random_data.randomDate()),
-                                          settings: LineChartBarData(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            barWidth: 2.0,
-                                            isCurved: true,
-                                            preventCurveOverShooting: true,
-                                            belowBarData: BarAreaData(
-                                              show: true,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .accent1,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                      chartStylingInfo: ChartStylingInfo(
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        showBorder: false,
-                                      ),
-                                      axisBounds: AxisBounds(),
-                                      xAxisLabelInfo: AxisLabelInfo(),
-                                      yAxisLabelInfo: AxisLabelInfo(),
+                              Column(children: [
+                                Text("Customers", style: TextStyle(color: Colors.black)),
+                                Text("Male", style: TextStyle(color: Colors.white, backgroundColor: pieChartColorsList[1])),
+                                Text("Female", style: TextStyle(color: Colors.white, backgroundColor: pieChartColorsList[0])),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  height: 300.0,
+                                  child: FlutterFlowPieChart(
+                                    data: FFPieChartData(
+                                      values: genderCount!,
+                                      colors: pieChartColorsList,
+                                      radius: [130.0],
+                                      borderWidth: [2.0],
+                                      borderColor: [
+                                        FlutterFlowTheme.of(context)
+                                            .secondaryBackground
+                                      ]                            ,
+                                    ),
+
+                                    donutHoleRadius: 0.0,
+                                    donutHoleColor: Colors.transparent,
+                                    sectionLabelType:
+                                    PieChartSectionLabelType.percent,
+                                    sectionLabelStyle:
+                                    FlutterFlowTheme.of(context)
+                                        .headlineSmall
+                                        .override(
+                                      fontFamily:
+                                      FlutterFlowTheme.of(context)
+                                          .headlineSmallFamily,
+                                      color: FlutterFlowTheme.of(context)
+                                          .accent3,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                          FlutterFlowTheme.of(context)
+                                              .headlineSmallFamily),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                height: 300.0,
-                                child: FlutterFlowPieChart(
-                                  data: FFPieChartData(
-                                    values: genderCount!,
-                                    colors: pieChartColorsList,
-                                    radius: [130.0],
-                                    borderWidth: [2.0],
-                                    borderColor: [
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryBackground
-                                    ],
-                                  ),
-                                  donutHoleRadius: 0.0,
-                                  donutHoleColor: Colors.transparent,
-                                  sectionLabelType:
-                                      PieChartSectionLabelType.value,
-                                  sectionLabelStyle:
-                                      FlutterFlowTheme.of(context)
-                                          .headlineSmall
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineSmallFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .accent3,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineSmallFamily),
-                                          ),
-                                ),
-                              ),
+                              ],)
                             ],
                           ),
+
                         ],
                       ),
                     ),
@@ -578,4 +685,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
       ),
     );
   }
+}
+
+// Class for chart data source, this can be modified based on the data in Firestore
+class _ChartData {
+  _ChartData({this.x, this.y});
+  final String? x;
+  final int? y;
 }
