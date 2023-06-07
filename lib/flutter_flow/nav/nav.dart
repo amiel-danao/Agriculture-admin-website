@@ -3,15 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
-import '../flutter_flow_theme.dart';
+import '../../create_user/create_user_widget.dart';
 import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
 import '../../index.dart';
 import '../../main.dart';
-import '../lat_lng.dart';
-import '../place.dart';
 import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -83,21 +81,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? NavBarPage() : PhoneSignInWidget(),
           routes: [
             FFRoute(
-              name: 'signIn',
-              path: 'signIn',
-              builder: (context, params) => SignInWidget(),
-            ),
-            FFRoute(
-              name: 'signUp',
-              path: 'signUp',
-              builder: (context, params) => SignUpWidget(),
-            ),
-            FFRoute(
-              name: 'createProfile',
-              path: 'createProfile',
-              builder: (context, params) => CreateProfileWidget(),
-            ),
-            FFRoute(
               name: 'forgotPassword',
               path: 'forgotPassword',
               builder: (context, params) => ForgotPasswordWidget(),
@@ -121,12 +104,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : UsersWidget(),
             ),
             FFRoute(
-              name: 'profilePage',
-              path: 'profilePage',
+              name: 'cropsPage',
+              path: 'cropsPage',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'profilePage')
-                  : ProfilePageWidget(),
+                  ? NavBarPage(initialPage: 'cropsPage')
+                  : CropsPageWidget(),
             ),
             FFRoute(
               name: 'homePage',
@@ -140,6 +123,42 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'homePage')
                   : HomePageWidget(),
+            ),
+            FFRoute(
+              name: 'customersPage',
+              path: 'customers',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'customersPage')
+                  : CustomersPageWidget(),
+            ),
+            FFRoute(
+              name: 'CreateUser',
+              path: 'createUser',
+              requireAuth: true,
+              asyncParams: {
+                'userToEdit': getDoc(['users'], UsersRecord.fromSnapshot),
+              },
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'CreateUser')
+                  : CreateUserWidget(
+                      userToEdit:
+                          params.getParam('userToEdit', ParamType.Document),
+                    ),
+            ),
+            FFRoute(
+              name: 'CreateCrop',
+              path: 'createCrop',
+              requireAuth: true,
+              asyncParams: {
+                'cropToEdit': getDoc(['Crops'], CropsRecord.fromSnapshot),
+              },
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'CreateCrop')
+                  : CreateCropWidget(
+                      cropToEdit:
+                          params.getParam('cropToEdit', ParamType.Document),
+                    ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -325,7 +344,7 @@ class FFRoute {
                   color: Colors.transparent,
                   child: Image.asset(
                     'assets/images/logo.png',
-                    fit: BoxFit.cover,
+                    fit: BoxFit.none,
                   ),
                 )
               : page;

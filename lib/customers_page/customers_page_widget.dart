@@ -1,28 +1,26 @@
-import '../backend/backend.dart';
+import '/backend/backend.dart';
 import '/components/side_bar_nav_widget.dart';
 import '/components/top_nav1_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'users_model.dart';
-export 'users_model.dart';
+import 'customers_page_model.dart';
+export 'customers_page_model.dart';
 
-class UsersWidget extends StatefulWidget {
-  const UsersWidget({Key? key}) : super(key: key);
+class CustomersPageWidget extends StatefulWidget {
+  const CustomersPageWidget({Key? key}) : super(key: key);
 
   @override
-  _UsersWidgetState createState() => _UsersWidgetState();
+  _CustomersPageWidgetState createState() => _CustomersPageWidgetState();
 }
 
-class _UsersWidgetState extends State<UsersWidget> {
-  late UsersModel _model;
+class _CustomersPageWidgetState extends State<CustomersPageWidget> {
+  late CustomersPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -30,7 +28,7 @@ class _UsersWidgetState extends State<UsersWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UsersModel());
+    _model = createModel(context, () => CustomersPageModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -71,7 +69,7 @@ class _UsersWidgetState extends State<UsersWidget> {
                   twoBG: FlutterFlowTheme.of(context).primaryBackground,
                   twoIcon: FaIcon(
                     FontAwesomeIcons.usersGear,
-                    color: FlutterFlowTheme.of(context).primary,
+                    color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   threeColor: FlutterFlowTheme.of(context).secondaryBackground,
                   threeIcon: FaIcon(
@@ -80,6 +78,7 @@ class _UsersWidgetState extends State<UsersWidget> {
                   ),
                   fourIcon: FaIcon(
                     FontAwesomeIcons.userGroup,
+                    color: FlutterFlowTheme.of(context).primary,
                   ),
                 ),
               ),
@@ -165,7 +164,7 @@ class _UsersWidgetState extends State<UsersWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Manage Users',
+                                            'Manage Customers',
                                             style: FlutterFlowTheme.of(context)
                                                 .headlineSmall,
                                           ),
@@ -174,68 +173,13 @@ class _UsersWidgetState extends State<UsersWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 4.0, 0.0, 0.0),
                                             child: Text(
-                                              'Below you will find a employees',
+                                              'Below you will find a list of customers',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
                                             ),
                                           ),
                                         ],
-                                      ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          context.pushNamed(
-                                            'CreateUser',
-                                            extra: <String, dynamic>{
-                                              kTransitionInfoKey:
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType
-                                                        .bottomToTop,
-                                              ),
-                                            },
-                                          );
-                                        },
-                                        text: 'Add User',
-                                        icon: Icon(
-                                          Icons.add_rounded,
-                                          size: 15.0,
-                                        ),
-                                        options: FFButtonOptions(
-                                          width: 150.0,
-                                          height: 40.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .titleSmall
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmallFamily,
-                                                color: Colors.white,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmallFamily),
-                                              ),
-                                          elevation: 3.0,
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(50.0),
-                                        ),
                                       ),
                                     ],
                                   ),
@@ -254,7 +198,19 @@ class _UsersWidgetState extends State<UsersWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        'Member Name',
+                                        'First Name',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Last Name',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
                                       ),
@@ -268,7 +224,20 @@ class _UsersWidgetState extends State<UsersWidget> {
                                     Expanded(
                                       flex: 2,
                                       child: Text(
-                                        'Phone',
+                                        'Email',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall,
+                                      ),
+                                    ),
+                                  if (responsiveVisibility(
+                                    context: context,
+                                    phone: false,
+                                    tablet: false,
+                                  ))
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        'Gender',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
                                       ),
@@ -287,7 +256,7 @@ class _UsersWidgetState extends State<UsersWidget> {
                                     ),
                                   Expanded(
                                     child: Text(
-                                      'Action',
+                                      'Status',
                                       textAlign: TextAlign.end,
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
@@ -299,10 +268,10 @@ class _UsersWidgetState extends State<UsersWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 16.0, 0.0, 0.0),
-                              child: StreamBuilder<List<UsersRecord>>(
-                                stream: queryUsersRecord(
-                                  queryBuilder: (usersRecord) =>
-                                      usersRecord.orderBy('created_time',
+                              child: StreamBuilder<List<ProfilesRecord>>(
+                                stream: queryProfilesRecord(
+                                  queryBuilder: (profilesRecord) =>
+                                      profilesRecord.orderBy('dateCreated',
                                           descending: true),
                                 ),
                                 builder: (context, snapshot) {
@@ -319,16 +288,18 @@ class _UsersWidgetState extends State<UsersWidget> {
                                       ),
                                     );
                                   }
-                                  List<UsersRecord> listViewUsersRecordList =
+                                  List<ProfilesRecord>
+                                      listViewProfilesRecordList =
                                       snapshot.data!;
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
-                                    itemCount: listViewUsersRecordList.length,
+                                    itemCount:
+                                        listViewProfilesRecordList.length,
                                     itemBuilder: (context, listViewIndex) {
-                                      final listViewUsersRecord =
-                                          listViewUsersRecordList[
+                                      final listViewProfilesRecord =
+                                          listViewProfilesRecordList[
                                               listViewIndex];
                                       return Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -377,7 +348,7 @@ class _UsersWidgetState extends State<UsersWidget> {
                                                           child:
                                                               CachedNetworkImage(
                                                             imageUrl:
-                                                                listViewUsersRecord
+                                                                listViewProfilesRecord
                                                                     .photoUrl,
                                                             width: 40.0,
                                                             height: 40.0,
@@ -393,8 +364,8 @@ class _UsersWidgetState extends State<UsersWidget> {
                                                                 .start,
                                                         children: [
                                                           AutoSizeText(
-                                                            listViewUsersRecord
-                                                                .displayName
+                                                            listViewProfilesRecord
+                                                                .firstName
                                                                 .maybeHandleOverflow(
                                                               maxChars: 32,
                                                               replacement: '…',
@@ -437,8 +408,40 @@ class _UsersWidgetState extends State<UsersWidget> {
                                                   Expanded(
                                                     flex: 2,
                                                     child: Text(
-                                                      listViewUsersRecord
-                                                          .phoneNumber,
+                                                      listViewProfilesRecord
+                                                          .lastName,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium,
+                                                    ),
+                                                  ),
+                                                if (responsiveVisibility(
+                                                  context: context,
+                                                  phone: false,
+                                                  tablet: false,
+                                                ))
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      listViewProfilesRecord
+                                                          .email,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium,
+                                                    ),
+                                                  ),
+                                                if (responsiveVisibility(
+                                                  context: context,
+                                                  phone: false,
+                                                  tablet: false,
+                                                ))
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      listViewProfilesRecord
+                                                          .gender,
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -454,8 +457,8 @@ class _UsersWidgetState extends State<UsersWidget> {
                                                     child: Text(
                                                       dateTimeFormat(
                                                           'relative',
-                                                          listViewUsersRecord
-                                                              .createdTime!),
+                                                          listViewProfilesRecord
+                                                              .dateCreated!),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -469,74 +472,62 @@ class _UsersWidgetState extends State<UsersWidget> {
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end,
                                                     children: [
-                                                      FFButtonWidget(
-                                                        onPressed: () async {
-                                                          context.pushNamed(
-                                                            'CreateUser',
-                                                            queryParameters: {
-                                                              'userToEdit':
-                                                                  serializeParam(
-                                                                listViewUsersRecord,
-                                                                ParamType
-                                                                    .Document,
-                                                              ),
-                                                            }.withoutNulls,
-                                                            extra: <String,
-                                                                dynamic>{
-                                                              'userToEdit':
-                                                                  listViewUsersRecord,
-                                                            },
-                                                          );
-                                                        },
-                                                        text: 'Edit',
-                                                        options:
-                                                            FFButtonOptions(
-                                                          height: 40.0,
+                                                      Text(
+                                                        'Active',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMediumFamily,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                      ),
+                                                      if (responsiveVisibility(
+                                                        context: context,
+                                                        tablet: false,
+                                                        tabletLandscape: false,
+                                                        desktop: false,
+                                                      ))
+                                                        Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      24.0,
                                                                       0.0,
-                                                                      24.0,
-                                                                      0.0),
-                                                          iconPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
+                                                                      2.0,
                                                                       0.0,
                                                                       0.0),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleSmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .titleSmallFamily,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    useGoogleFonts: GoogleFonts
-                                                                            .asMap()
-                                                                        .containsKey(
-                                                                            FlutterFlowTheme.of(context).titleSmallFamily),
-                                                                  ),
-                                                          elevation: 3.0,
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 1.0,
+                                                          child: Text(
+                                                            dateTimeFormat(
+                                                                'relative',
+                                                                getCurrentTimestamp),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmallFamily,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodySmallFamily),
+                                                                ),
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
                                                         ),
-                                                      ),
                                                     ],
                                                   ),
                                                 ),

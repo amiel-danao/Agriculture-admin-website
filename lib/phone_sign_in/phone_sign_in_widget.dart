@@ -4,10 +4,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'phone_sign_in_model.dart';
 export 'phone_sign_in_model.dart';
 
@@ -69,6 +67,21 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
 
     super.dispose();
   }
+
+  String appendCountryCode(String phoneNumber, String countryCode) {
+    final regex = RegExp(r'^\d{10}$'); // Regex to match 10-digit phone number
+
+    if(phoneNumber.startsWith("0")){
+      phoneNumber = phoneNumber.substring(1, phoneNumber.length);
+    }
+
+    if (!regex.hasMatch(phoneNumber)) {
+      return phoneNumber; // Return original phone number if it doesn't match the expected format
+    }
+
+    return '$countryCode$phoneNumber';
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -219,20 +232,41 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
                               onPressed: () async {
                                 final phoneNumberVal =
                                     _model.phoneNumberController.text;
-                                if (phoneNumberVal == null ||
-                                    phoneNumberVal.isEmpty ||
-                                    !phoneNumberVal.startsWith('+')) {
+
+
+
+                                if (phoneNumberVal.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                          'Phone Number is required and has to start with +.'),
+                                          'Please enter a valid phone number'),
                                     ),
                                   );
                                   return;
                                 }
+
+                                var validPhone = phoneNumberVal;
+                                if (!phoneNumberVal.startsWith('+')) {
+                                  validPhone = appendCountryCode(
+                                      phoneNumberVal, '+63');
+                                }
+                                
+                                var registeredPhoneNumber = await FirebaseFirestore.instance.collection("users").where("phone_number", isEqualTo: validPhone)
+                                .limit(1).get();
+
+                                if(registeredPhoneNumber.size <= 0){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Phone Number is not a registered farmer account!'),
+                                    ),
+                                  );
+                                  return;
+                                }
+                                
                                 await authManager.beginPhoneAuth(
                                   context: context,
-                                  phoneNumber: phoneNumberVal,
+                                  phoneNumber: validPhone,
                                   onCodeSent: (context) async {
                                     context.goNamedAuth(
                                       'phoneVerify',

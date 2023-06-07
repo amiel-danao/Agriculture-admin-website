@@ -5,13 +5,11 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -118,15 +116,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
     getDataFromFireStore()
     .then((results) {
-      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {});
       });
     });
   }
 
   Future<void> getDataFromFireStore() async {
-    // var snapShotsValue =
-    // await FirebaseFirestore.instance.collection("Profiles").get();
     var minDate;
 
     await FirebaseFirestore.instance.collection("Profiles").orderBy("dateCreated").limit(1).get().then((value) {
@@ -134,17 +130,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
     });
 
     print(minDate);
-
-    DateTime endDate = DateTime.now();
-
-    // Convert the DateTime objects to Firestore Timestamps
-    Timestamp endTimestamp = Timestamp.fromDate(endDate);
-
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('Profiles')
-        .where('dateCreated', isGreaterThanOrEqualTo: minDate)
-        .where('dateCreated', isLessThanOrEqualTo: endTimestamp)
-        .orderBy('dateCreated')
-        .get();
 
     List<_ChartData> list = [];
 
@@ -223,7 +208,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
       });
     });
 
-    await FirebaseFirestore.instance.collection("crops").count().get().then((value) {
+    await FirebaseFirestore.instance.collection("Crops").count().get().then((value) {
       setState(() {
         cropsCount = value.count;
       });
@@ -281,14 +266,17 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     color: FlutterFlowTheme.of(context).primary,
                   ),
                   twoBG: FlutterFlowTheme.of(context).secondaryBackground,
-                  twoIcon: Icon(
-                    Icons.people_alt,
+                  twoIcon: FaIcon(
+                    FontAwesomeIcons.userGear,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   threeColor: FlutterFlowTheme.of(context).secondaryBackground,
                   threeIcon: FaIcon(
                     FontAwesomeIcons.carrot,
                     color: FlutterFlowTheme.of(context).primaryText,
+                  ),
+                  fourIcon: FaIcon(
+                    FontAwesomeIcons.userGroup,
                   ),
                 ),
               ),
@@ -482,7 +470,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               FaIcon(
-                                                FontAwesomeIcons.usersCog,
+                                                FontAwesomeIcons.usersGear,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
@@ -639,7 +627,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   height: 300.0,
                                   child: FlutterFlowPieChart(
                                     data: FFPieChartData(
-                                      values: genderCount!,
+                                      values: genderCount,
                                       colors: pieChartColorsList,
                                       radius: [130.0],
                                       borderWidth: [2.0],

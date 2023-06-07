@@ -1,8 +1,7 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'side_bar_nav_model.dart';
 export 'side_bar_nav_model.dart';
 
@@ -15,6 +14,9 @@ class SideBarNavWidget extends StatefulWidget {
     this.twoIcon,
     this.threeColor,
     this.threeIcon,
+    this.usersList,
+    this.fourIcon,
+    this.fourBg,
   }) : super(key: key);
 
   final Color? oneBG;
@@ -23,6 +25,9 @@ class SideBarNavWidget extends StatefulWidget {
   final Widget? twoIcon;
   final Color? threeColor;
   final Widget? threeIcon;
+  final List<UsersRecord>? usersList;
+  final Widget? fourIcon;
+  final Color? fourBg;
 
   @override
   _SideBarNavWidgetState createState() => _SideBarNavWidgetState();
@@ -208,7 +213,53 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                 highlightColor: Colors.transparent,
                 onTap: () async {
                   context.pushNamed(
-                    'profilePage',
+                    'customersPage',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 48.0,
+                  decoration: BoxDecoration(
+                    color: widget.twoBG,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 4.0, 4.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 12.0, 0.0),
+                          child: widget.fourIcon!,
+                        ),
+                        Text(
+                          'Customers',
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    'cropsPage',
                     extra: <String, dynamic>{
                       kTransitionInfoKey: TransitionInfo(
                         hasTransition: true,

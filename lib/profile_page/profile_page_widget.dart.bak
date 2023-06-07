@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'profile_page_model.dart';
 export 'profile_page_model.dart';
 
@@ -63,17 +64,14 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   twoBG: FlutterFlowTheme.of(context).secondaryBackground,
-                  twoIcon: FaIcon(
-                    FontAwesomeIcons.usersGear,
+                  twoIcon: Icon(
+                    Icons.people_alt,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   threeColor: FlutterFlowTheme.of(context).primaryBackground,
                   threeIcon: FaIcon(
                     FontAwesomeIcons.carrot,
                     color: FlutterFlowTheme.of(context).primary,
-                  ),
-                  fourIcon: FaIcon(
-                    FontAwesomeIcons.userGroup,
                   ),
                 ),
               ),

@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'phone_verify_model.dart';
 export 'phone_verify_model.dart';
 
@@ -199,7 +198,7 @@ class _PhoneVerifyWidgetState extends State<PhoneVerifyWidget> {
                         onPressed: () async {
                           GoRouter.of(context).prepareAuthEvent();
                           final smsCodeVal = _model.pinCodeController!.text;
-                          if (smsCodeVal == null || smsCodeVal.isEmpty) {
+                          if (smsCodeVal.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Enter SMS verification code.'),
