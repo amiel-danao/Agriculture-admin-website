@@ -1,3 +1,6 @@
+import 'package:flutter/scheduler.dart';
+
+import '../custom_code/actions/append_country_code.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -37,6 +40,13 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CreateUserModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        _model.currentPhotoUrl = widget.userToEdit?.photoUrl?? 'https://firebasestorage.googleapis.com/v0/b/agriculturescan.appspot.com/o/logo.png?alt=media&token=d76d4570-22c2-4228-af99-4a572d89217d&_gl=1*1f4hsug*_ga*NzAzNzIxMjgwLjE2ODQzOTA2OTY.*_ga_CW55HF8NVT*MTY4NjE1NjA1Mi42OS4xLjE2ODYxNTk2MDUuMC4wLjA.';
+      });
+    });
 
     _model.displayNameController ??=
         TextEditingController(text: widget.userToEdit?.displayName??"");
@@ -197,6 +207,9 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                   photoUrl: _model.uploadedFileUrl,
                 );
                 await widget.userToEdit!.reference.update(usersUpdateData);
+                setState(() {
+                  _model.currentPhotoUrl = _model.uploadedFileUrl;
+                });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
@@ -220,8 +233,9 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                 ),
-                child: Image.network(
-                  widget.userToEdit?.photoUrl??'https://i.imgur.com/zpYzk4A.jpeg',
+                child:
+                Image.network(
+                  _model.currentPhotoUrl??'https://i.imgur.com/zpYzk4A.jpeg',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -397,17 +411,24 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                           !_model.formKey1.currentState!.validate()) {
                         return;
                       }
+
+                      var validPhone = _model.phoneNumberController.text;
+                      if (!_model.phoneNumberController.text.startsWith('+')) {
+                        validPhone = appendCountryCode(
+                            _model.phoneNumberController.text, '+63');
+                      }
+
                       _model.isPhoneNumberUnique =
                           await actions.uniquePhoneNumber(
-                        _model.phoneNumberController.text,
+                            validPhone,
                       );
                       if (widget.userToEdit != null) {
                         if (_model.isPhoneNumberUnique! ||
                             (widget.userToEdit!.phoneNumber ==
-                                _model.phoneNumberController.text)) {
+                                validPhone)) {
                           final usersUpdateData = createUsersRecordData(
                             displayName: _model.displayNameController.text,
-                            phoneNumber: _model.phoneNumberController.text,
+                            phoneNumber: validPhone,
                             gender: _model.genderDropDownValue,
                           );
                           await widget.userToEdit!.reference
@@ -417,7 +438,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                             builder: (alertDialogContext) {
                               return AlertDialog(
                                 title: Text('Updated'),
-                                content: Text('Crop was updated successfully'),
+                                content: Text('User was updated successfully'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -459,10 +480,16 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         }
                       } else {
                         if (_model.isPhoneNumberUnique!) {
+                          var validPhone = _model.phoneNumberController.text;
+                          if (!_model.phoneNumberController.text.startsWith('+')) {
+                            validPhone = appendCountryCode(
+                                _model.phoneNumberController.text, '+63');
+                          }
+
                           final usersCreateData = {
                             ...createUsersRecordData(
                               displayName: _model.displayNameController.text,
-                              phoneNumber: _model.phoneNumberController.text,
+                              phoneNumber: validPhone,
                               gender: _model.genderDropDownValue,
                             ),
                             'created_time': FieldValue.serverTimestamp(),
@@ -476,7 +503,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                               return AlertDialog(
                                 title: Text('Saved'),
                                 content:
-                                    Text('New crop was added successfully'),
+                                    Text('New user was added successfully'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -489,7 +516,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                           );
 
                           context.pushNamed(
-                            'cropsPage',
+                            'users',
                             extra: <String, dynamic>{
                               kTransitionInfoKey: TransitionInfo(
                                 hasTransition: true,

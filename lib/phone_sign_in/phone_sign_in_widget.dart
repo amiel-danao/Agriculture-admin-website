@@ -1,3 +1,4 @@
+import '../custom_code/actions/append_country_code.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -66,20 +67,6 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
     _model.dispose();
 
     super.dispose();
-  }
-
-  String appendCountryCode(String phoneNumber, String countryCode) {
-    final regex = RegExp(r'^\d{10}$'); // Regex to match 10-digit phone number
-
-    if(phoneNumber.startsWith("0")){
-      phoneNumber = phoneNumber.substring(1, phoneNumber.length);
-    }
-
-    if (!regex.hasMatch(phoneNumber)) {
-      return phoneNumber; // Return original phone number if it doesn't match the expected format
-    }
-
-    return '$countryCode$phoneNumber';
   }
 
 

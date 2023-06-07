@@ -21,6 +21,8 @@ class CreateUserModel extends FlutterFlowModel {
 
   String? previousPhotoUrl;
 
+  String? currentPhotoUrl;
+
   ///  State fields for stateful widgets in this page.
 
   final formKey2 = GlobalKey<FormState>();
