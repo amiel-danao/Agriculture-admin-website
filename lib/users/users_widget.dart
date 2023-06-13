@@ -98,6 +98,9 @@ class _UsersWidgetState extends State<UsersWidget> {
                       ),
                     ],
                   ),
+              Flexible(
+                child:
+
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 24.0),
@@ -122,7 +125,10 @@ class _UsersWidgetState extends State<UsersWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 16.0, 0.0, 12.0),
-                        child: Column(
+                        child:
+                        SingleChildScrollView(
+                          child:
+                          Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -552,9 +558,12 @@ class _UsersWidgetState extends State<UsersWidget> {
                             ),
                           ],
                         ),
+                        )
                       ),
                     ),
                   ),
+              )
+
                 ],
               ),
             ),
