@@ -303,6 +303,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   fourIcon: FaIcon(
                     FontAwesomeIcons.userGroup,
                   ),
+                  fiveIcon: FaIcon(
+                    FontAwesomeIcons.gear,
+                  ),
                 ),
               ),
             Expanded(

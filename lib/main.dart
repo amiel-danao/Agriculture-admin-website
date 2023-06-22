@@ -111,6 +111,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'cropsPage': CropsPageWidget(),
       'CreateCrop': CreateCropWidget(),
       'CreateUser': CreateUserWidget(),
+      'settingsPage': SettingsPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -180,6 +181,14 @@ class _NavBarPageState extends State<NavBarPage> {
             BottomNavigationBarItem(
               icon: FaIcon(
                 FontAwesomeIcons.carrot,
+                size: 24.0,
+              ),
+              label: '•',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.gear,
                 size: 24.0,
               ),
               label: '•',

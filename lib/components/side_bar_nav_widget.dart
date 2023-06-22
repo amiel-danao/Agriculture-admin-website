@@ -2,6 +2,9 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'side_bar_nav_model.dart';
 export 'side_bar_nav_model.dart';
 
@@ -17,6 +20,8 @@ class SideBarNavWidget extends StatefulWidget {
     this.usersList,
     this.fourIcon,
     this.fourBg,
+    this.fiveIcon,
+    this.fiveBg,
   }) : super(key: key);
 
   final Color? oneBG;
@@ -28,6 +33,8 @@ class SideBarNavWidget extends StatefulWidget {
   final List<UsersRecord>? usersList;
   final Widget? fourIcon;
   final Color? fourBg;
+  final Widget? fiveIcon;
+  final Color? fiveBg;
 
   @override
   _SideBarNavWidgetState createState() => _SideBarNavWidgetState();
@@ -60,32 +67,32 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 230.0,
+      width: 230,
       height: double.infinity,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryText,
         boxShadow: [
           BoxShadow(
-            blurRadius: 3.0,
+            blurRadius: 3,
             color: Color(0x33000000),
-            offset: Offset(0.0, 1.0),
+            offset: Offset(0, 1),
           )
         ],
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0.0),
-          bottomRight: Radius.circular(12.0),
-          topLeft: Radius.circular(0.0),
-          topRight: Radius.circular(12.0),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(12),
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(12),
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -100,8 +107,8 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                     },
                     child: Image.asset(
                       'assets/images/logo.png',
-                      width: 90.0,
-                      height: 90.0,
+                      width: 90,
+                      height: 90,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
@@ -113,7 +120,7 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
               style: TextStyle(),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -133,19 +140,18 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 48.0,
+                  height: 48,
                   decoration: BoxDecoration(
                     color: widget.oneBG,
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 4.0, 4.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 4, 4, 4),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 12.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                           child: widget.oneIcon!,
                         ),
                         Text(
@@ -159,7 +165,7 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -179,19 +185,18 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 48.0,
+                  height: 48,
                   decoration: BoxDecoration(
                     color: widget.twoBG,
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 4.0, 4.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 4, 4, 4),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 12.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                           child: widget.twoIcon!,
                         ),
                         Text(
@@ -205,7 +210,7 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -225,19 +230,18 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 48.0,
+                  height: 48,
                   decoration: BoxDecoration(
                     color: widget.twoBG,
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 4.0, 4.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 4, 4, 4),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 12.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                           child: widget.fourIcon!,
                         ),
                         Text(
@@ -251,7 +255,7 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -271,23 +275,67 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: 48.0,
+                  height: 48,
                   decoration: BoxDecoration(
                     color: widget.threeColor,
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 4.0, 4.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 4, 4, 4),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 12.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                           child: widget.threeIcon!,
                         ),
                         Text(
                           'Crops Details',
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    'settingsPage',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: widget.threeColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 4, 4, 4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                          child: widget.fiveIcon!,
+                        ),
+                        Text(
+                          'Settings',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ],

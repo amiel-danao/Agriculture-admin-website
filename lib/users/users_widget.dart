@@ -81,6 +81,9 @@ class _UsersWidgetState extends State<UsersWidget> {
                   fourIcon: FaIcon(
                     FontAwesomeIcons.userGroup,
                   ),
+                  fiveIcon: FaIcon(
+                    FontAwesomeIcons.gear,
+                  ),
                 ),
               ),
             Expanded(

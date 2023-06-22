@@ -8,3 +8,4 @@ export '/home_page/home_page_widget.dart' show HomePageWidget;
 export '/customers_page/customers_page_widget.dart' show CustomersPageWidget;
 export '/create_user/create_user_widget.dart' show CreateUserWidget;
 export '/create_crop/create_crop_widget.dart' show CreateCropWidget;
+export '/settings_page/settings_page_widget.dart' show SettingsPageWidget;

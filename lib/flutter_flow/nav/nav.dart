@@ -159,6 +159,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                       cropToEdit:
                           params.getParam('cropToEdit', ParamType.Document),
                     ),
+            ),
+            FFRoute(
+              name: 'settingsPage',
+              path: 'settingsPage',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'settingsPage')
+                  : SettingsPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

@@ -8,6 +8,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class CropsPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // Model for sideBarNav component.
   late SideBarNavModel sideBarNavModel;
   // Model for TopNav1 component.
@@ -25,11 +26,12 @@ class CropsPageModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     sideBarNavModel.dispose();
     topNav1Model.dispose();
     streamSubscriptions.forEach((s) => s?.cancel());
   }
 
-  /// Additional helper methods are added here.
+/// Additional helper methods are added here.
 
 }

@@ -33,11 +33,16 @@ class CropsRecord extends FirestoreRecord {
   int get count => _count ?? 0;
   bool hasCount()  => _count != null;
 
+  List<dynamic>? _variation;
+  List<dynamic> get variation => _variation ?? [];
+  bool hasVariation() => _variation != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _dateCreated = snapshotData['dateCreated'] as DateTime?;
     _description = snapshotData['description'] as String?;
     _count = snapshotData['count'] as int?;
+    _variation = snapshotData['variation'] as List<dynamic>?;
   }
 
   static CollectionReference get collection =>
@@ -69,7 +74,8 @@ Map<String, dynamic> createCropsRecordData({
   String? name,
   DateTime? dateCreated,
   String? description,
-  int? count
+  int? count,
+  List<dynamic>? variation
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -77,6 +83,7 @@ Map<String, dynamic> createCropsRecordData({
       'dateCreated': dateCreated,
       'description': description,
       'count': count,
+      'variation': variation,
     }.withoutNulls,
   );
 

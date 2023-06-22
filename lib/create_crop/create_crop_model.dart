@@ -2,6 +2,15 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 class CreateCropModel extends FlutterFlowModel {
+  ///  Local state fields for this page.
+
+  List<String> variations = [];
+  void addToVariations(String item) => variations.add(item);
+  void removeFromVariations(String item) => variations.remove(item);
+  void removeAtIndexFromVariations(int index) => variations.removeAt(index);
+  void updateVariationsAtIndex(int index, Function(String) updateFn) =>
+      variations[index] = updateFn(variations[index]);
+
   ///  State fields for stateful widgets in this page.
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
@@ -38,6 +47,10 @@ class CreateCropModel extends FlutterFlowModel {
   // State field(s) for cropDescription widget.
   TextEditingController? cropDescriptionController;
   String? Function(BuildContext, String?)? cropDescriptionControllerValidator;
+  // State field(s) for variationTextField widget.
+  TextEditingController? variationTextFieldController;
+  String? Function(BuildContext, String?)?
+  variationTextFieldControllerValidator;
   // Stores action output result for [Custom Action - uniqueCropName] action in Button widget.
   bool? isCropNameUnique;
 
@@ -53,8 +66,11 @@ class CreateCropModel extends FlutterFlowModel {
     cropNameController?.dispose();
     cropCountController?.dispose();
     cropDescriptionController?.dispose();
+    variationTextFieldController?.dispose();
   }
 
-  /// Additional helper methods are added here.
+/// Action blocks are added here.
+
+/// Additional helper methods are added here.
 
 }

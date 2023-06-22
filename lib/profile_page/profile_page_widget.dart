@@ -75,6 +75,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   fourIcon: FaIcon(
                     FontAwesomeIcons.userGroup,
                   ),
+                  fiveIcon: FaIcon(
+                    FontAwesomeIcons.gear,
+                  ),
                 ),
               ),
             Expanded(

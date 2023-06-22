@@ -80,6 +80,9 @@ class _CustomersPageWidgetState extends State<CustomersPageWidget> {
                     FontAwesomeIcons.userGroup,
                     color: FlutterFlowTheme.of(context).primary,
                   ),
+                  fiveIcon: FaIcon(
+                    FontAwesomeIcons.gear,
+                  ),
                 ),
               ),
             Expanded(
