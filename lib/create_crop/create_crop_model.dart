@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CreateCropModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
-
+  final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for cropName widget.
   TextEditingController? cropNameController;
@@ -20,6 +20,21 @@ class CreateCropModel extends FlutterFlowModel {
     return null;
   }
 
+  // State field(s) for cropCount widget.
+  TextEditingController? cropCountController;
+  String? Function(BuildContext, String?)? cropCountControllerValidator;
+  String? _cropCountControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 0) {
+      return 'Requires at least 0 characters.';
+    }
+
+    return null;
+  }
+
   // State field(s) for cropDescription widget.
   TextEditingController? cropDescriptionController;
   String? Function(BuildContext, String?)? cropDescriptionControllerValidator;
@@ -30,10 +45,13 @@ class CreateCropModel extends FlutterFlowModel {
 
   void initState(BuildContext context) {
     cropNameControllerValidator = _cropNameControllerValidator;
+    cropCountControllerValidator = _cropCountControllerValidator;
   }
 
   void dispose() {
+    unfocusNode.dispose();
     cropNameController?.dispose();
+    cropCountController?.dispose();
     cropDescriptionController?.dispose();
   }
 

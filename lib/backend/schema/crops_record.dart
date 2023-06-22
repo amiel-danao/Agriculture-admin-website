@@ -28,10 +28,16 @@ class CropsRecord extends FirestoreRecord {
   String get description => _description ?? '';
   bool hasDescription() => _description != null;
 
+
+  int? _count;
+  int get count => _count ?? 0;
+  bool hasCount()  => _count != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _dateCreated = snapshotData['dateCreated'] as DateTime?;
     _description = snapshotData['description'] as String?;
+    _count = snapshotData['count'] as int?;
   }
 
   static CollectionReference get collection =>
@@ -63,12 +69,14 @@ Map<String, dynamic> createCropsRecordData({
   String? name,
   DateTime? dateCreated,
   String? description,
+  int? count
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'name': name,
       'dateCreated': dateCreated,
       'description': description,
+      'count': count,
     }.withoutNulls,
   );
 

@@ -38,6 +38,17 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
   List<_ChartData> chartData = <_ChartData>[];
 
+  late List<ColumnSeries<dynamic, String>> _seriesData;
+  Future<List<CropsRecord>> _fetchCropData() async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Crops')
+        .get();
+
+    return snapshot.docs.map((doc) {
+      return CropsRecord.fromSnapshot(doc);
+    }).toList();
+  }
+
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -120,6 +131,20 @@ class _HomePageWidgetState extends State<HomePageWidget>
         setState(() {});
       });
     });
+
+    _seriesData = [];
+    _fetchCropData().then((data) {
+      setState(() {
+        _seriesData = [
+          ColumnSeries<CropsRecord, String>(
+            dataSource: data,
+            xValueMapper: (CropsRecord crop, _) => crop.name,
+            yValueMapper: (CropsRecord crop, _) => crop.count,
+          ),
+        ];
+      });
+    });
+
   }
 
   Future<void> getDataFromFireStore() async {
@@ -588,30 +613,38 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           Container(
                             height: 300.0,
                             child:
-                            SfCartesianChart(
-                                title: ChartTitle(text: 'Registration chart'),
-                                primaryXAxis: CategoryAxis(),
-                                primaryYAxis: NumericAxis(
-                                    interval: 1,
-                                    title: AxisTitle(text: 'New users'),
-                                    rangePadding: ChartRangePadding.additional,
-                                    // Assigned a name for the y-axis for customization purposes
-                                    name: 'primaryYAxis'
-                                ),
-                                series: <ChartSeries<_ChartData, String>>[
-                                  LineSeries<_ChartData, String>(
-                                    // Assigned the data source for the chart series.
-                                      dataSource: chartData,
-                                      xValueMapper: (_ChartData data, _) => data.x,
-                                      yValueMapper: (_ChartData data, _) {
-                                        // Converted the date time y-values from the chart data source to millisecondSinceEpoch
-                                        // integer values and then mapped to numeric y-axis.
-                                        return data.y;
-                                      },
-                                      dataLabelSettings: DataLabelSettings(isVisible: true),
-                                      markerSettings: MarkerSettings(isVisible: true))
-                                ]
+                            // SfCartesianChart(
+                            //     title: ChartTitle(text: 'Registration chart'),
+                            //     primaryXAxis: CategoryAxis(),
+                            //     primaryYAxis: NumericAxis(
+                            //         interval: 1,
+                            //         title: AxisTitle(text: 'New users'),
+                            //         rangePadding: ChartRangePadding.additional,
+                            //         // Assigned a name for the y-axis for customization purposes
+                            //         name: 'primaryYAxis'
+                            //     ),
+                            //     series: <ChartSeries<_ChartData, String>>[
+                            //       LineSeries<_ChartData, String>(
+                            //         // Assigned the data source for the chart series.
+                            //           dataSource: chartData,
+                            //           xValueMapper: (_ChartData data, _) => data.x,
+                            //           yValueMapper: (_ChartData data, _) {
+                            //             // Converted the date time y-values from the chart data source to millisecondSinceEpoch
+                            //             // integer values and then mapped to numeric y-axis.
+                            //             return data.y;
+                            //           },
+                            //           dataLabelSettings: DataLabelSettings(isVisible: true),
+                            //           markerSettings: MarkerSettings(isVisible: true))
+                            //     ]
+                            // )
+
+                            _seriesData.isNotEmpty
+                                ? SfCartesianChart(
+                              series: _seriesData,
+                              primaryXAxis: CategoryAxis(),
+                              primaryYAxis: NumericAxis(),
                             )
+                                : Center(child:CircularProgressIndicator()),
 
                           ),
                           Row(

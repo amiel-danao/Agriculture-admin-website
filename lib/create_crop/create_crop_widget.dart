@@ -25,7 +25,6 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
   late CreateCropModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -34,6 +33,18 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
 
     _model.cropNameController ??=
         TextEditingController(text: widget.cropToEdit?.name??"");
+    // var count = "0";
+    // if(widget.cropToEdit != null){
+    //   count = valueOrDefault<String>(
+    //     widget.cropToEdit!.count.toString(),
+    //     '0',
+    //   );
+    // }
+    _model.cropCountController ??= TextEditingController(
+        text: valueOrDefault<String>(
+          widget.cropToEdit!.count.toString(),
+          '0',
+        ));
     _model.cropDescriptionController ??=
         TextEditingController(text: widget.cropToEdit?.description??"");
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -43,14 +54,13 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -129,7 +139,11 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
             Form(
               key: _model.formKey,
               autovalidateMode: AutovalidateMode.always,
-              child: Padding(
+              child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+
+              Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
                 child: TextFormField(
                   controller: _model.cropNameController,
@@ -177,7 +191,61 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
                       _model.cropNameControllerValidator.asValidator(context),
                 ),
               ),
+
+              // Generated code for this cropCount Widget...
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+                child: TextFormField(
+                  controller: _model.cropCountController,
+                  textCapitalization: TextCapitalization.words,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: 'Count',
+                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                    hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primary,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).error,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).error,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    filled: true,
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                  keyboardType: TextInputType.number,
+                  validator: _model.cropCountControllerValidator.asValidator(context),
+                ),
+              )
+
+            ])
             ),
+
+
+
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 12.0),
               child: TextFormField(
@@ -248,6 +316,7 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
                         final cropsUpdateData = createCropsRecordData(
                           name: _model.cropNameController.text,
                           description: _model.cropDescriptionController.text,
+                          count: int.parse(_model.cropCountController.text)
                         );
                         await widget.cropToEdit!.reference
                             .update(cropsUpdateData);
@@ -301,8 +370,9 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
                         final cropsCreateData = {
                           ...createCropsRecordData(
                             name: _model.cropNameController.text,
-                            description: _model.cropDescriptionController.text,
+                            description: _model.cropDescriptionController.text
                           ),
+                          'count': int.parse(_model.cropCountController.text),
                           'dateCreated': FieldValue.serverTimestamp(),
                         };
                         await CropsRecord.collection.doc().set(cropsCreateData);
@@ -355,7 +425,7 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
 
                     setState(() {});
                   },
-                  text: 'Save Changes',
+                  text: widget.cropToEdit == null? 'Add crop': 'Save Changes',
                   options: FFButtonOptions(
                     width: 270.0,
                     height: 50.0,
