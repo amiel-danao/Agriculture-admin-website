@@ -75,16 +75,39 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-      body: Align(
+      body:
+
+      Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 1,
+      decoration: BoxDecoration(
+      color: FlutterFlowTheme.of(context).secondaryBackground,
+      image: DecorationImage(
+      fit: BoxFit.cover,
+      image: Image.asset(
+      'assets/images/farm_bg.jpg',
+      ).image,
+      ),
+      ),
+      child:
+
+      Align(
         alignment: AlignmentDirectional(0.0, 0.0),
-        child: SingleChildScrollView(
-          child: Column(
+        child:
+
+        SingleChildScrollView(
+          child:
+
+
+          Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
                 alignment: AlignmentDirectional(0.0, 0.0),
-                child: Container(
+                child:
+
+                Container(
                   width: double.infinity,
                   constraints: BoxConstraints(
                     maxWidth: 570.0,
@@ -95,8 +118,14 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
                   alignment: AlignmentDirectional(0.0, 0.0),
                   child: Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
-                    child: SingleChildScrollView(
-                      child: Column(
+                    child:
+
+                    SingleChildScrollView(
+                      child:
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child:
+                      Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -294,14 +323,19 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
                           ),
                         ],
                       ),
+                      )
                     ),
                   ),
                 ),
+
               ),
             ],
           ),
+
         ),
-      ),
+
+      )
+    ,)
     );
   }
 }

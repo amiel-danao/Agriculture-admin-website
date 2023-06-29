@@ -328,8 +328,9 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
                           ),
                         ),
                       ),
-                      Flexible(
-                        flex: 1,
+
+            Flexible(
+              flex: 1,
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                           child: TextFormField(
@@ -406,8 +407,9 @@ class _CreateCropWidgetState extends State<CreateCropWidget> {
                           ),
                         ),
                       ),
+
                       Flexible(
-                        flex: 2,
+                        flex: 7,
                         child: Align(
                           alignment: AlignmentDirectional(-1, 0),
                           child: Padding(

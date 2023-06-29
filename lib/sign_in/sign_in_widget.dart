@@ -49,7 +49,22 @@ class _SignInWidgetState extends State<SignInWidget> {
           top: true,
           child: Align(
             alignment: AlignmentDirectional(0.0, -1.0),
-            child: SingleChildScrollView(
+            child:
+    Container(
+    width: double.infinity,
+    height: MediaQuery.of(context).size.height * 1,
+    decoration: BoxDecoration(
+    color: FlutterFlowTheme.of(context).secondaryBackground,
+    image: DecorationImage(
+    fit: BoxFit.cover,
+    image: Image.asset(
+    'assets/images/farm_bg.jpg',
+    ).image,
+    ),
+    ),
+    child:
+
+            SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -369,6 +384,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                 ],
               ),
             ),
+    )
           ),
         ),
       ),

@@ -200,7 +200,7 @@ class _SideBarNavWidgetState extends State<SideBarNavWidget> {
                           child: widget.twoIcon!,
                         ),
                         Text(
-                          'Users',
+                          'Admins',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ],
