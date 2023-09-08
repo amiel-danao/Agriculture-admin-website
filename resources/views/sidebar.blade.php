@@ -6,10 +6,10 @@
     </div>
     <ul class="sidebar-buttons">
         <li><button class="sidebar-button" onclick="location.href='/dashboard'">Dashboard</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/about'">Users</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/contact'">Customers</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/about'">Crop Details</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/contact'">Settings</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/User'">Users</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/Customers'">Customers</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/Crop Details'">Crop Details</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/Settings'">Settings</button></li>
     </ul>
 </aside>
 
@@ -27,7 +27,7 @@
         color: #fff;
         width: 200px;
         height: 94vh;
-        position: fixed;
+        position: absolute;
         top: 50%;
         left: 1%;
         transform: translate(0, -50%);
