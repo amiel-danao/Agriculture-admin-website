@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/homepage', function () {
+Route::match(['get', 'post'], '/homepage', function () {
     return view('homepage');
-});
+})->name('homepage');
+Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');
+
+
+
+

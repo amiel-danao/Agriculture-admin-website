@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use HasFactory;
+    protected $table = 'users';
+    protected $fillable = ['name', 'email', 'user_id', 'mobile_number']; // Add your columns here
 }

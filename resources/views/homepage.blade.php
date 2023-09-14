@@ -11,7 +11,9 @@
     <div class="content">
          @include('sidebar')
         @include('navbar')
-        @include('dashboard')
+        {{-- @include('dashboard') --}}
+        @include('users')
+
     </div>
 </body>
 </html>
