@@ -12,9 +12,9 @@
          @include('sidebar')
         @include('navbar')
         {{-- @include('dashboard') --}}
-        @include('users')
-
-    </div>
+        {{--@include('users')--}}
+        @include('customers')
+  </div>
 </body>
 </html>
 
