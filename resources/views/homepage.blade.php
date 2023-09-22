@@ -12,8 +12,8 @@
          @include('sidebar')
         @include('navbar')
         {{-- @include('dashboard') --}}
-        {{--@include('users')--}}
-        @include('customers')
+        @include('users')
+        {{--@include('customers')--}}
   </div>
 </body>
 </html>
@@ -21,11 +21,11 @@
 
 <style>
     body {
-        background-color: #1e2428;
+        background-color: #ffffff;
     }
         
     .background-container {
-        background-image: url('{{ asset('images/background.jpg') }}');
+
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
