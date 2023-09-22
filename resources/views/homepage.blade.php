@@ -12,8 +12,8 @@
          @include('sidebar')
         @include('navbar')
         {{-- @include('dashboard') --}}
-        @include('users')
-        {{--@include('customers')--}}
+        {{--@include('users')--}}
+        @include('customers')
   </div>
 </body>
 </html>

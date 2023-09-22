@@ -17,7 +17,7 @@ Route::match(['get', 'post'], '/homepage', function () {
 })->name('homepage');
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');
 
-// Route::get('users/index', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
+Route::get('customer/index', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
 
 
 
