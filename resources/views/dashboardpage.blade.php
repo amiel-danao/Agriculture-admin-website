@@ -11,9 +11,7 @@
     <div class="content">
          @include('sidebar')
         @include('navbar')
-        {{-- @include('dashboard') --}}
-        {{--@include('users')--}}
-        @include('customers')
+         @include('dashboard')
   </div>
 </body>
 </html>
@@ -21,7 +19,7 @@
 
 <style>
     body {
-        background-color: #ffffff;
+        background-color: #c6c8ca;
     }
         
     .background-container {

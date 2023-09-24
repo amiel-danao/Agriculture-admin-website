@@ -5,10 +5,10 @@
         <img src="{{ asset('images/logo.png') }}" alt="Logo">
     </div>
     <ul class="sidebar-buttons">
-        <li><button class="sidebar-button" onclick="location.href='/dashboard'">Dashboard</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/User'">Users</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/Customers'">Customers</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/Crop Details'">Crop Details</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/dashboardpage'">Dashboard</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/userspage'">Users</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/customerspage'">Customers</button></li>
+        <li><button class="sidebar-button" onclick="location.href='/croppage'">Crop Details</button></li>
         <li><button class="sidebar-button" onclick="location.href='/Settings'">Settings</button></li>
     </ul>
 </aside>
