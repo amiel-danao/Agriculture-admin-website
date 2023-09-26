@@ -1,19 +1,25 @@
 <!-- sidebar.blade.php -->
 
-<aside class="sidebar">
+<div class="bg-secondary vh-100">
     <div class="logo">
         <img src="{{ asset('images/logo.png') }}" alt="Logo">
     </div>
-    <ul class="sidebar-buttons">
-        <li><button class="sidebar-button" onclick="location.href='/dashboardpage'">Dashboard</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/userspage'">Users</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/customerspage'">Customers</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/croppage'">Crop Details</button></li>
-        <li><button class="sidebar-button" onclick="location.href='/Settings'">Settings</button></li>
-    </ul>
-</aside>
+    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('dashboard')}}">Dashboard</a>
+        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('users')}}">Users</a>
+        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('customers')}}">Customers</a>
+        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('crops')}}">Crop Details</a>
+        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('settings')}}">Settings</a>
+    </div>
+</div>
 
 <style>
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+        color: black;
+        background-color: white;
+        border: 1px solid;
+    }
+
     .logo {
         text-align: center;
         margin-bottom: 20px;
@@ -44,9 +50,9 @@
         margin: 0;
     }
 
-    .sidebar-buttons {
+    /* .sidebar-buttons {
         flex-grow: 1;
-    }
+    } */
 
     .sidebar-button {
         background-color: #ffffff;

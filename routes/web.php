@@ -12,20 +12,24 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::match(['get', 'post'], '/dashboardpage', function () {
-    return view('dashboardpage');
-})->name('dashboardpage');
-Route::get('/userspage', function () {
-    return view('userspage'); // Replace 'userspage' with your actual view name
-})->name('userspage');
+Route::match(['get', 'post'], '/', function () {
+    return view('pages.dashboard');
+})->name('dashboard');
+Route::get('/users', function () {
+    return view('pages.users'); // Replace 'userspage' with your actual view name
+})->name('users');
 
-Route::get('/customerspage', function () {
-    return view('customerspage'); // Replace 'customerspage' with your actual view name
-})->name('customerspage');
+Route::get('/customers', function () {
+    return view('pages.customers'); // Replace 'customerspage' with your actual view name
+})->name('customers');
 
-Route::get('/croppage', function () {
-    return view('croppage'); // Replace 'croppage' with your actual view name
-})->name('croppage');
+Route::get('/crops', function () {
+    return view('pages.crops'); // Replace 'croppage' with your actual view name
+})->name('crops');
+
+Route::get('/settings', function () {
+    return view('pages.settings'); // Replace 'croppage' with your actual view name
+})->name('settings');
 
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');
 

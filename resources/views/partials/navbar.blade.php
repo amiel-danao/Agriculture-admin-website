@@ -10,7 +10,7 @@
 
 <style>
     /* Navigation Styles */
-    .navigation {
+    /* .navigation {
         background-color: #ffffff;
         color: #fff;
         width: 84%;
@@ -20,7 +20,7 @@
         left: 15%;
         z-index: 2;
         border-radius: 0;
-    }
+    } */
 
     .nav-links {
         list-style: none;
