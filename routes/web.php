@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,9 +13,21 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::redirect('/', 'login');
+
 Route::match(['get', 'post'], '/', function () {
     return view('pages.dashboard');
 })->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 Route::get('/users', function () {
     return view('pages.users'); // Replace 'userspage' with your actual view name
 })->name('users');
@@ -34,6 +47,4 @@ Route::get('/settings', function () {
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');
 
 Route::get('customer/index', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
-
-
-
+require __DIR__.'/auth.php';

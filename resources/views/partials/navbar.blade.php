@@ -1,13 +1,16 @@
 <!-- navigation.blade.php -->
 
-<nav class="navigation">
-    <ul class="nav-links">
-        <li class="nav-right">
-                <button type="submit" class="logout-button">Log out</button>
-        </li>
-    </ul>
-</nav>
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
 
+    <nav class="navigation">
+        <ul class="nav-links">
+            <li class="nav-right">
+                <button type="submit" class="logout-button">Log out</button>
+            </li>
+        </ul>
+    </nav>
+</form>
 <style>
     /* Navigation Styles */
     /* .navigation {
