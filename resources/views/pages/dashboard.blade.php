@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="row mr-auto">
+                {{-- <div class="row mr-auto">
                    
                         <div class="col-8 p-4">
                             <canvas id="myChart"></canvas>
@@ -123,6 +123,12 @@
                             <canvas id="myPieChart"></canvas>
                         </div>
                     
+                </div> --}}
+            
+                <div class="text-center my-1">
+                    <div style="width: 70%; height: 450px; margin: 0 auto; border-radius: 10px;">
+                        <img src="{{ asset('images/agriculture.png') }}" alt="Logo" style="width: 100%; height: 100%;">
+                    </div>
                 </div>
             </div>
         </div>
