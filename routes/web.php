@@ -32,9 +32,9 @@ Route::get('/users', function () {
     return view('pages.users'); // Replace 'userspage' with your actual view name
 })->name('users');
 
-Route::get('/customers', function () {
-    return view('pages.customers'); // Replace 'customerspage' with your actual view name
-})->name('customers');
+Route::get('/employee', function () {
+    return view('pages.employee'); // Replace 'customerspage' with your actual view name
+})->name('employee');
 
 Route::get('/crops', function () {
     return view('pages.crops'); // Replace 'croppage' with your actual view name

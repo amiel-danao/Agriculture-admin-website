@@ -1,6 +1,6 @@
 @extends('home-master')
 
-@section('title', 'Users')
+@section('title', 'Employee')
 
 @section('style')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -17,7 +17,7 @@
             </div>
 
             <div class="row">
-                <h1>Customers</h1>
+                <h1>Employee</h1>
                 <table id="customer-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
