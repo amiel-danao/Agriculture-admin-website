@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,9 +29,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 Route::get('/users', function () {
     return view('pages.users'); // Replace 'userspage' with your actual view name
 })->name('users');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::delete('/users', [UserController::class, 'delete'])->name('users.delete');
+Route::get('/edit', function () {
+    return view('pages.edit');
+})->name('edit');
+Route::put('/edit/update', [UserController::class, 'update'])->name('users.update');
+// Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+// Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+
 
 Route::get('/employee', function () {
     return view('pages.employee'); // Replace 'customerspage' with your actual view name
@@ -47,4 +59,6 @@ Route::get('/settings', function () {
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');
 
 Route::get('customer/index', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
+
+
 require __DIR__.'/auth.php';
