@@ -31,29 +31,24 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/users', function () {
-    return view('pages.users'); // Replace 'userspage' with your actual view name
+    return view('pages.users'); 
 })->name('users');
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::delete('/users', [UserController::class, 'delete'])->name('users.delete');
-Route::get('/edit', function () {
-    return view('pages.edit');
-})->name('edit');
-Route::put('/edit/update', [UserController::class, 'update'])->name('users.update');
-// Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-// Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
+Route::get('/users/fetchdata', [UserController::class, 'fetchdata'])->name('users.fetchdata');
 
 
 Route::get('/employee', function () {
-    return view('pages.employee'); // Replace 'customerspage' with your actual view name
+    return view('pages.employee'); 
 })->name('employee');
 
 Route::get('/crops', function () {
-    return view('pages.crops'); // Replace 'croppage' with your actual view name
+    return view('pages.crops'); 
 })->name('crops');
 
 Route::get('/settings', function () {
-    return view('pages.settings'); // Replace 'croppage' with your actual view name
+    return view('pages.settings'); 
 })->name('settings');
 
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');

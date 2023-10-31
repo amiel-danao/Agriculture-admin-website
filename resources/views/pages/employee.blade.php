@@ -5,7 +5,8 @@
 @section('style')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 @endsection
-    @section('content')
+
+@section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 ps-0">

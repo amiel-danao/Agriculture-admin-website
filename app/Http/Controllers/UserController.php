@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use App\Models\User;
 use DataTables;
+use Validator;
 
 class UserController extends Controller
 {
@@ -24,23 +26,21 @@ class UserController extends Controller
                     return $checkbox;
                 })
                 ->addColumn('action', function($row){
-                    $editUrl = route('users.edit', ['user' => $row->id]);
-                    $deleteUrl = route('users.destroy', ['user' => $row->id]);
-                    $csrf = csrf_field();
-                    $method = method_field('DELETE');
-                    $btn = '<a href="'.$editUrl.'" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
-                    $btn .= '<form action="'.$deleteUrl.'" method="POST" style="display:inline-block">
-                                '.$csrf.'
-                                '.$method.'
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this user?\')"><i class="fas fa-trash"></i></button>
-                            </form>';
+                    // $editUrl = route('users.', $row->id);
+                    $deleteUrl = route('users.destroy', $row->id);
+                    $btn = '<a href="#" class="edit btn btn-primary btn-sm edit" id="'.$row->id.'">Edit</a>';
+                    $btn .= '&nbsp;<form action="'.$deleteUrl.'" method="POST" style="display:inline-block;">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="'.csrf_token().'">
+                                <button type="submit" class="btn btn-danger btn-sm" style="background-color: #dc3545;" onclick="return confirm(\'Are you sure you want to delete the selected users?\')">Delete</button>
+                             </form>';
                     return $btn;
                 })
                 ->rawColumns(['checkbox', 'action'])
                 ->make(true);
         }
     
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users')->with('success', 'User deleted successfully');
     }
     public function delete(Request $request)
     {
@@ -49,44 +49,72 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Selected users have been deleted.');
     }
 
-    // public function edit(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-    //     return view('users.edit', compact('user'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-    //     $user->name = $request->input('name');
-    //     $user->email = $request->input('email');
-    //     $user->mobile_number = $request->input('mobile_number');
-    //     $user->save();
-    //     return redirect()->route('users.index')->with('success', 'User has been updated.');
-    // }
-
-    public function edit(Request $request)
+    public function edit($id) : View
     {
-        $userIds = explode(',', $request->query('user_ids'));
-        $users = User::whereIn('id', $userIds)->get();
-        return view('users.edit', compact('users'));
+    
+        $user = User::find($id);
+
+        if (!$user) {
+            abort(404);
+        }
+        return view('pages.edit', ['user']);
     }
 
-    public function update(Request $request)
+    function update(Request $request)
     {
-        foreach ($request->input('user_ids') as $userId) {
-            $user = User::find($userId);
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->mobile_number = $request->input('mobile_number');
-            $user->save();
+        $validation = Validator::make($request->all(), [
+            'name' => 'required',
+            'email'  => 'required',
+            'mobile_number'  => 'required',
+            'user_id'  => 'required',
+        ]);
+        
+        $error_array = array();
+        $success_output = '';
+        if ($validation->fails())
+        {
+            foreach ($validation->messages()->getMessages() as $field_name => $messages)
+            {
+                $error_array[] = $messages; 
+            }
         }
-        return redirect()->route('users.index')->with('success', 'Users updated successfully.');
+        else
+        {
+            if($request->get('button_action') == 'update')
+            {
+                $user = User::find($request->get('id'));
+                $user->name = $request->get('name');
+                $user->email = $request->get('email');
+                $user->mobile_number = $request->get('mobile_number');
+                $user->user_id = $request->get('user_id');
+                $user->save();
+                $success_output = '<div class="alert alert-success">Data Updated</div>';
+            }
+            
+        }
+        
+        $output = array(
+            'error'     =>  $error_array,
+            'success'   =>  $success_output
+        );
+        echo json_encode($output);
+    }
+    
+    function fetchdata(Request $request)
+    {
+        $id = $request->input('id');
+        $user = User::find($id);
+        $output = array(
+            'name'    =>  $user->name,
+            'email'     =>  $user->email,
+            'mobile_number'     =>  $user->mobile_number,
+            'user_id'     =>  $user->user_id,
+        );
+        echo json_encode($output);
     }
     public function destroy(User $user)
     {
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
-
 }
