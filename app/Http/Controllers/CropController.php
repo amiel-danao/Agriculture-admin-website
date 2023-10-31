@@ -11,27 +11,37 @@ use App\Models\Variation;
 class CropController extends Controller
 {
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'count' => 'required|integer',
-            'variations' => 'array', // Assuming 'variations' is submitted as an array
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string',
+        'description' => 'nullable|string',
+        'count' => 'required|integer',
+        'variations' => 'array', // Assuming 'variations' is submitted as an array
+    ]);
 
-        // Create a new crop instance
-        $crop = new Crop([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'count' => $request->input('count'),
-        ]);
+    // Create a new crop instance
+    $crop = new Crop([
+        'name' => $request->input('name'),
+        'description' => $request->input('description'),
+        'count' => $request->input('count'),
+    ]);
 
-        // Save the crop to the database
-        $crop->save();
+    // Save the crop to the database
+    $crop->save();
 
-        // You can then return a response or redirect to another page.
-        return redirect()->route('crops.index')->with('success', 'Crop added successfully');
+    // Associate variations with the crop
+    $variations = $request->input('variations');
+
+    if ($variations) {
+        foreach ($variations as $variationName) {
+            $variation = new Variation(['name' => $variationName]);
+            $crop->variations()->save($variation);
+        }
     }
+
+    // You can then return a response or redirect to another page.
+    return redirect()->route('crops.index')->with('success', 'Crop added successfully');
+}
 
     public function index()
     {

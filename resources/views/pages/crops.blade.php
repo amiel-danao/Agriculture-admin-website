@@ -80,6 +80,8 @@
                         <h5>Variations</h5>
                         <div id="addVariationsContainer">
                             <!-- Variations will be added here -->
+                            <input type="text" class="form-control mb-2" name="variations[]">
+                            <!-- You can add more input fields for variations as needed -->
                         </div>
                         <button type="button" class="btn btn-primary btn-sm mt-2" id="addVariation">Add Variation</button>
                     </div>
@@ -92,8 +94,7 @@
         </div>
     </div>
 </div>
-
-
+s
 
 
 @section('scripts')
@@ -102,56 +103,50 @@
 <script>
     $(document).ready(function () {
         // Add Crop
-$('#saveCrop').click(function () {
-    console.log('Save Crop button clicked');
-    var cropName = $('#cropName').val();
-    var cropCount = $('#cropCount').val();
-    var cropDescription = $('#cropDescription').val();
-    
-    // Get variations from the input fields
-    var variations = [];
-    $('#addVariationsContainer input').each(function () {
-        var variation = $(this).val();
-        if (variation.trim() !== '') {
-            variations.push(variation);
-        }
-    });
+        $('#saveCrop').click(function () {
+            var cropName = $('#cropName').val();
+            var cropCount = $('#cropCount').val();
+            var cropDescription = $('#cropDescription').val();
 
-    $.ajax({
-        type: 'POST',
-        url: '{{ route("crops.store") }}',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            name: cropName,
-            count: cropCount,
-            description: cropDescription,
-            variations: variations // Include variations in the data
-        },
-        success: function (data) {
-            console.log('AJAX request succeeded', data);
-            $('#cropName').val('');
-            $('#cropCount').val('');
-            $('#cropDescription').val('');
-            $('#addVariationsContainer').empty();
-            $('#addCropModal').modal('hide');
-            // Reload the page to update the crop list
-            location.reload();
-        },
-        error: function (xhr, status, error) {
-            console.log('AJAX error:', xhr.responseText);
-            alert("Failed to add crop.");
-        }
-    });
-});
+            var variations = [];
+            $('#addVariationsContainer input[name="variations[]"]').each(function () {
+                var variation = $(this).val();
+                if (variation.trim() !== '') {
+                    variations.push(variation);
+                }
+            });
 
+            $.ajax({
+                type: 'POST',
+                url: '{{ route("crops.store") }}',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    name: cropName,
+                    count: cropCount,
+                    description: cropDescription,
+                    variations: variations
+                },
+                success: function (data) {
+                    $('#cropName').val('');
+                    $('#cropCount').val('');
+                    $('#cropDescription').val('');
+                    $('#addVariationsContainer').empty();
+                    $('#addCropModal').modal('hide');
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert("Failed to add crop.");
+                }
+            });
+        });
 
         $('#addVariation').click(function () {
             var variationInput = '<input type="text" class="form-control mb-2" name="variations[]" placeholder="Variation">';
             $('#addVariationsContainer').append(variationInput);
         });
-        $(document).ready(function () {
+
         // Edit Crop
         $('.edit-crop-button').click(function () {
             var row = $(this).closest('tr');
@@ -161,10 +156,6 @@ $('#saveCrop').click(function () {
             // Redirect to the edit page
             window.location.href = '/crops/' + cropId + '/edit';
         });
-
-    });
-
-
 
         // Delete Crop
         $('.delete-crop-button').click(function () {
@@ -180,7 +171,6 @@ $('#saveCrop').click(function () {
                     },
                     success: function (data) {
                         alert('Crop deleted successfully.');
-                        // Remove the row from the table
                         row.remove();
                     },
                     error: function (xhr, status, error) {
