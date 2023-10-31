@@ -8,7 +8,7 @@
         <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('dashboard')}}">Dashboard</a>
         <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('users')}}">Users</a>
         <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('customers')}}">Customers</a>
-        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('crops')}}">Crop Details</a>
+        <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('crops.index')}}">Crop Details</a>
         <a class="nav-link active" id="v-pills-home-tab" type="button" role="tab" href="{{route('settings')}}">Settings</a>
     </div>
 </div>

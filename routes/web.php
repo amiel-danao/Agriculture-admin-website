@@ -1,17 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use Illuminate\Support\Facades\Route;       
+
+
 Route::match(['get', 'post'], '/', function () {
     return view('pages.dashboard');
 })->name('dashboard');
@@ -23,17 +14,31 @@ Route::get('/customers', function () {
     return view('pages.customers'); // Replace 'customerspage' with your actual view name
 })->name('customers');
 
-Route::get('/crops', function () {
-    return view('pages.crops'); // Replace 'croppage' with your actual view name
-})->name('crops');
+Route::prefix('crops')->group(function () {
+    // Display the list of crops
+    Route::get('/', 'App\Http\Controllers\CropController@index')->name('crops.index');
+
+    // Create a new crop
+    Route::post('/', 'App\Http\Controllers\CropController@store')->name('crops.store');
+
+    // Edit a crop (display edit form)
+    Route::get('/{id}/edit', 'App\Http\Controllers\CropController@edit')->name('crops.edit');
+
+    // Update a crop
+    Route::patch('/{id}', 'App\Http\Controllers\CropController@update')->name('crops.update');
+
+    // Delete a crop
+    Route::delete('/{id}', 'App\Http\Controllers\CropController@destroy')->name('crops.destroy');
+});
+
+
+
 
 Route::get('/settings', function () {
-    return view('pages.settings'); // Replace 'croppage' with your actual view name
+    return view('pages.settings');
 })->name('settings');
 
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');
 
 Route::get('customer/index', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
-
-
 

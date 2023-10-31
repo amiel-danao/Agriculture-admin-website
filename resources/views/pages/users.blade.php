@@ -45,7 +45,7 @@
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('users.index') }}",
+            ajax: '{{ route('users.index') }}',
             columns: [
                 { data: 'email', name: 'email' },
                 { data: 'user_id', name: 'user_id' },
