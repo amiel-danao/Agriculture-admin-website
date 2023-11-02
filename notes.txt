@@ -1,0 +1,34 @@
+
+
+Web. 
+
+*Add log in. 
+Add delete edit in users(If deleted in website also deleted in database)
+*Remove graphs. (ADD BG AGRI IMAGE THEN ADD SIMPLE AGRI QUOTES) "IMPROVING AGRICULTURE, IMPROVING LIVES"
+Change customer into employee name.
+
+App. 
+Information about season of crops
+(Parang mas okay to sa apps para malaman ng mga farmers kung kailan maganda mag tanim)
+(lalagyan ng calendar tapos kada month or days naka highlights kung anong pananim yung maganda itanim) 
+
+Information about season of crops
+
+Information about stage
+sa apps ilalagay to pag picture yung sibuyas lababas 
+Grown for its edible bulb. The onion is likely native to southwestern Asia but is now grown throughout the world, chiefly in the temperate zones. Onions (Allium cepa) are low in nutrients but are valued for their flavor and used widely in cooking. They add flavor to dishes such as stews, roasts, soups, and salads and are also served as a cooked vegetable.
+
+Stage 2
+
+Estimate remaining days before Harvest
+
+
+(Pano magiging diskarte dito sa Fertilizer san ilalagay)
+Fertilizer Need in Crops ( Kung anong kailangan na gamot kung may sakit)
+Kuya kaya ba pag picture yung pananim parang diagnose nya narin kung may sakit o wala
+Kung may sakit lalabas sa baba ng estimated harvest
+
+Image recognition 
+Recognizing stage of the crops and suggest the status and action to be exact taken. 
+
+Recognize the variation of rice, corn, and onion.

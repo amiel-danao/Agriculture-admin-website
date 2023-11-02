@@ -11,6 +11,14 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
+        DB::table('users')->insert([
+            'name'=> 'admin1',
+            'email' => 'admin@email.com',
+            'user_id' => 'admin1',
+            'mobile_number' => '',
+            'password' => Hash::make('password123'), // You can set a default password here
+        ]);
+
         $faker = Faker::create();
 
         foreach (range(1, 100) as $index) {
