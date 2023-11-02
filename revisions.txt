@@ -1,0 +1,10 @@
+[Admin]
+~~~~~~skip create weather API
+Info about season of crops
+monitoring for harvest, pesticide application, market price
+
+
+
+[App]
+suggest when will be the next harvest date, next application of insecticide
+* recognize variation of rice, corn and onion

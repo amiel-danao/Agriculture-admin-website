@@ -1,5 +1,11 @@
 [open xampp and start: mysql and apache]
 
+install the ff if not yet installed:
+
+https://www.7-zip.org/a/7z2301-x64.exe
+https://getcomposer.org/Composer-Setup.exe
+https://nodejs.org/dist/v18.18.2/node-v18.18.2-x64.msi
+
 [run the ff command in the terminal, make sure to navigate in the root folder of your project
 the ff will only be needed to run once]
 
