@@ -10,7 +10,7 @@ class User extends Model implements Authenticatable
 {
     use HasFactory;
     protected $table = 'users';
-    protected $fillable = ['name', 'email', 'password', 'user_id', 'mobile_number'];
+    protected $fillable = ['name', 'email', 'password', 'user_id', 'mobile_number', "role_id"];
     public function getAuthIdentifierName()
     {
         return 'id';
@@ -40,6 +40,10 @@ class User extends Model implements Authenticatable
     {
         return 'remember_token';
     } // Add your columns here
+
+    public function role() {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }
 
 

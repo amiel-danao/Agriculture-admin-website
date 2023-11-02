@@ -23,6 +23,7 @@ class UsersTableSeeder extends Seeder
                 'user_id' => $faker->userName,
                 'mobile_number' => $mobileNumber,
                 'password' => Hash::make('password123'), // You can set a default password here
+                'role_id' => 1,
             ]);
         }
     }
