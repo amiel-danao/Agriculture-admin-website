@@ -20,9 +20,9 @@ Route::redirect('/', 'login');
 Route::match(['get', 'post'], '/', function () {
     return view('pages.dashboard');
 })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('pages.dashboard');
+// })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
 // routes for profile pages
 // Route::middleware('auth')->group(function () {

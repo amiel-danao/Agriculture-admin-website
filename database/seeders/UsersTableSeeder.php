@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@email.com',
             'user_id' => 'admin1',
             'mobile_number' => '',
+            'role_id' => 1,
             'password' => Hash::make('password123'), // You can set a default password here
         ]);
 
