@@ -10,7 +10,10 @@ class Crop extends Model
     protected $table = 'crops';
 
     protected $fillable = [
-        'name', 'description', 'count',
+        'name',
+        'description',
+        'count',
+        'variations',
     ];
 
     public function variations()
@@ -18,5 +21,7 @@ class Crop extends Model
         return $this->hasMany(Variation::class);
     }
 
-
+    protected $casts = [
+        'variations' => 'json',
+    ];
 }

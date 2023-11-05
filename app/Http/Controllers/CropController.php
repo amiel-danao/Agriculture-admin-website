@@ -50,6 +50,12 @@ class CropController extends Controller
         return view('pages.crops', ['crops' => $crops]);
     }
 
+    public function all()
+    {
+        $crops = Crop::all();
+        return response()->json($crops);
+    }
+
     public function destroy($id)
     {
         Log::info("Received ID in destroy method: $id");

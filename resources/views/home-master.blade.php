@@ -98,6 +98,10 @@
     .btn-danger{
         background-color: #e43943 !important;
     }
+
+    .btn-secondary{
+        background-color: #6b757d !important;
+    }
     
 </style>
 
