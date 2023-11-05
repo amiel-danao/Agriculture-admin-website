@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Crop;
 use Illuminate\Support\Facades\Log;
 use App\Models\Variation;
+use Illuminate\Support\Facades\DB;
 
 class CropController extends Controller
 {
@@ -16,7 +17,6 @@ class CropController extends Controller
         'name' => 'required|string',
         'description' => 'nullable|string',
         'count' => 'required|integer',
-        'variations' => 'array', // Assuming 'variations' is submitted as an array
     ]);
 
     // Create a new crop instance
@@ -54,16 +54,26 @@ class CropController extends Controller
     {
         $query = $request->input('name');
 
-        // Check if the 'name' query parameter is provided
-        if ($query) {
-            $crops = Crop::where('name', 'ilike', '%' . $query . '%')->get();
+        // Check the database connection type
+        $connection = config('database.default');
+
+        if ($query && ($connection === 'pgsql' || $connection === 'mysql')) {
+            // Use a database-agnostic case-insensitive search
+            $crops = Crop::where(function ($queryBuilder) use ($query, $connection) {
+                if ($connection === 'pgsql') {
+                    $queryBuilder->where('name', 'ILIKE', '%' . $query . '%'); // For PostgreSQL (ILIKE)
+                } else {
+                    $queryBuilder->orWhere('name', 'LIKE', '%' . $query . '%');  // For MySQL (LIKE)
+                }
+            })->get();
         } else {
-            // If 'name' query parameter is not provided, fetch all crops
+            // If 'name' query parameter is not provided or the database is not supported, fetch all crops
             $crops = Crop::all();
         }
 
         return response()->json($crops);
     }
+    
 
 
     public function destroy($id)
@@ -102,30 +112,18 @@ public function update(Request $request, $id)
             'name' => 'required|string',
             'description' => 'nullable|string',
             'count' => 'required|integer',
-            'variations' => 'array', // Assuming 'variations' is submitted as an array
         ]);
 
         // Update the crop attributes
         $crop->name = $request->input('name');
         $crop->description = $request->input('description');
         $crop->count = $request->input('count');
+        $crop->months = $request->input('months', null);
+        $crop->harvest = $request->input('harvest', '');
 
         // Save the updated crop to the database
         $crop->save();
 
-        // Handle variations
-        $variations = $request->input('variations');
-
-        // First, remove all existing variations associated with the crop
-        $crop->variations()->delete();
-
-        // Then, add the new variations
-        if ($variations) {
-            foreach ($variations as $variationName) {
-                $variation = new Variation(['name' => $variationName]);
-                $crop->variations()->save($variation);
-            }
-        }
 
         // Redirect to the crop index page with a success message
         return redirect()->route('crops.index')->with('success', 'Crop updated successfully');

@@ -13,7 +13,8 @@ class Crop extends Model
         'name',
         'description',
         'count',
-        'variations',
+        'harvest',
+        'months',
     ];
 
     public function variations()
@@ -22,6 +23,6 @@ class Crop extends Model
     }
 
     protected $casts = [
-        'variations' => 'json',
+        'months' => 'json',
     ];
 }

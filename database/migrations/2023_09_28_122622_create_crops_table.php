@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('count');
-            $table->json('variations')->nullable();
+            $table->text('harvest')->nullable();
+            $table->json('months')->nullable();
             $table->timestamps();
         });
     }

@@ -5,7 +5,8 @@
 @section('style')
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> Include your custom CSS file -->
+    <!-- Include your custom CSS file if needed -->
+</style>
 @endsection
 
 @section('content')
@@ -54,6 +55,29 @@
                         </div>
                         <button type="button" class="btn btn-primary btn-sm mt-2" id="addVariation">Add Variation</button>
                     </div>
+                    <div class="mb-3">
+                        <label for="harvest" class="form-label">Crop Harvest Info</label>
+                        <textarea class="form-control" id="harvest" name="harvest" rows="3">{{ old('harvest', $crop->harvest) }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="months" class="form-label">Select Months of planting <small>(Hold Ctrl+Click for multiple select)</small></label>
+                        <select name="months[]" class="form-select" multiple>
+                            <option value="January" {{ !empty($crop->months) && in_array('January', $crop->months) ? 'selected' : '' }}>January</option>
+                            <option value="February" {{ !empty($crop->months) && in_array('February', $crop->months) ? 'selected' : '' }}>February</option>
+                            <option value="March" {{ !empty($crop->months) && in_array('March', $crop->months) ? 'selected' : '' }}>March</option>
+                            <option value="April" {{ !empty($crop->months) && in_array('April', $crop->months) ? 'selected' : '' }}>April</option>
+                            <option value="May" {{ !empty($crop->months) && in_array('May', $crop->months) ? 'selected' : '' }}>May</option>
+                            <option value="June" {{ !empty($crop->months) && in_array('June', $crop->months) ? 'selected' : '' }}>June</option>
+                            <option value="July" {{ !empty($crop->months) && in_array('July', $crop->months) ? 'selected' : '' }}>July</option>
+                            <option value="August" {{ !empty($crop->months) && in_array('August', $crop->months) ? 'selected' : '' }}>August</option>
+                            <option value="September" {{ !empty($crop->months) && in_array('September', $crop->months) ? 'selected' : '' }}>September</option>
+                            <option value="October" {{ !empty($crop->months) && in_array('October', $crop->months) ? 'selected' : '' }}>October</option>
+                            <option value="November" {{ !empty($crop->months) && in_array('November', $crop->months) ? 'selected' : '' }}>November</option>
+                            <option value="December" {{ !empty($crop->months) && in_array('December', $crop->months) ? 'selected' : '' }}>December</option>
+                        </select>
+                    </div>
+
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                         <a class="btn btn-secondary" href="{{ route('crops.index') }}">Back to Crops</a>
@@ -90,6 +114,10 @@
                 let variationInput = '<input type="text" class="form-control mb-2" name="variations[]" value="' + variations[i] + '">';
                 $('#variations').append(variationInput);
             }
+
+            // Select existing months in the multi-select dropdown
+            var selectedMonths = row.find('td:eq(4)').text().split(', ');
+            $('select[name="months[]"]').val(selectedMonths);
         });
     });
     $(document).ready(function () {
