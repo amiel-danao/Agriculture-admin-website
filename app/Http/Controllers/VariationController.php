@@ -13,7 +13,7 @@ class VariationController extends Controller
 
         if ($cropId) {
             $variations = \App\Models\Variation::where('crop_id', $cropId)->get();
-            return response()->json(['variations' => $variations], 200);
+            return response()->json($variations, 200);
         }
 
         return response()->json(['message' => 'Please provide a crop_id in the query parameter.'], 400);
