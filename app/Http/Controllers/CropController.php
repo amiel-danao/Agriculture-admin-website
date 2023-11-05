@@ -56,7 +56,7 @@ class CropController extends Controller
 
         // Check if the 'name' query parameter is provided
         if ($query) {
-            $crops = Crop::where('name', 'like', '%' . $query . '%')->get();
+            $crops = Crop::where('name', 'ilike', '%' . $query . '%')->get();
         } else {
             // If 'name' query parameter is not provided, fetch all crops
             $crops = Crop::all();
@@ -64,6 +64,7 @@ class CropController extends Controller
 
         return response()->json($crops);
     }
+
 
     public function destroy($id)
     {
