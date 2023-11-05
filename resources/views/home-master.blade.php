@@ -15,7 +15,7 @@
     
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
     @yield('style')
     <style>
     .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
