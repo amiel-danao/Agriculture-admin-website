@@ -124,7 +124,18 @@ public function update(Request $request, $id)
         // Save the updated crop to the database
         $crop->save();
 
+        $variations = $request->input('variations');
 
+        // First, remove all existing variations associated with the crop
+        $crop->variations()->delete();
+
+        // Then, add the new variations
+        if ($variations) {
+            foreach ($variations as $variationName) {
+                $variation = new Variation(['name' => $variationName]);
+                $crop->variations()->save($variation);
+            }
+        }
         // Redirect to the crop index page with a success message
         return redirect()->route('crops.index')->with('success', 'Crop updated successfully');
     } catch (ModelNotFoundException $e) {
