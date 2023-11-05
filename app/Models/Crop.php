@@ -23,6 +23,7 @@ class Crop extends Model
     }
 
     protected $casts = [
-        'months' => 'json',
+        // 'months' => 'json',
+        'months' => 'array',
     ];
 }
