@@ -3,9 +3,9 @@
 Web. 
 
 *Add log in. 
-Add delete edit in users(If deleted in website also deleted in database)
+*Add delete edit in users(If deleted in website also deleted in database)
 *Remove graphs. (ADD BG AGRI IMAGE THEN ADD SIMPLE AGRI QUOTES) "IMPROVING AGRICULTURE, IMPROVING LIVES"
-Change customer into employee name.
+*Change customer into employee name.
 
 App. 
 Information about season of crops

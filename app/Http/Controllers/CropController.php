@@ -50,9 +50,18 @@ class CropController extends Controller
         return view('pages.crops', ['crops' => $crops]);
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        $crops = Crop::all();
+        $query = $request->input('name');
+
+        // Check if the 'name' query parameter is provided
+        if ($query) {
+            $crops = Crop::where('name', 'like', '%' . $query . '%')->get();
+        } else {
+            // If 'name' query parameter is not provided, fetch all crops
+            $crops = Crop::all();
+        }
+
         return response()->json($crops);
     }
 
