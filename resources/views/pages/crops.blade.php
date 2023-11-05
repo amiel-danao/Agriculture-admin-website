@@ -4,12 +4,15 @@
 
 @section('style')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" />
 @endsection
+
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 ps-0">
-            @include('partials.sidebar')
+        @include('partials.sidebar')
         </div>
         <div class="col">
             <div class="row">

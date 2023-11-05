@@ -12,11 +12,83 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('images/site.webmanifest') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    @yield('style')
+    
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
-    
+    <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css']) -->
+    @yield('style')
+    <style>
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+        color: black;
+        background-color: white;
+        border: 1px solid;
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .logo img {
+        max-width: 80%;
+    }
+
+    .sidebar {
+        background-color: #57636c;
+        color: #fff;
+        width: 200px;
+        height: 94vh;
+        position: absolute;
+        top: 50%;
+        left: 1%;
+        transform: translate(0, -50%);
+        padding: 20px;
+        border-radius: 1%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* .sidebar-buttons {
+        flex-grow: 1;
+    } */
+
+    .sidebar-button {
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid;
+        padding: 10px 20px;
+        text-align: left;
+        width: 100%;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 12px;
+        margin-bottom: 5px;
+    }
+
+    .sidebar-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .sidebar-link {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .sidebar-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
 
 </head>
     @csrf

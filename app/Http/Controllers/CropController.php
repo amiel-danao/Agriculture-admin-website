@@ -60,17 +60,20 @@ class CropController extends Controller
     }
 
     public function edit($id)
-{
-    try {
-        // Find the crop by ID
-        $crop = Crop::findOrFail($id);
+    {
+        try {
+            // Find the crop by ID
+            $crop = Crop::findOrFail($id);
 
-        return view('pages.edit', ['crop' => $crop]);
-    } catch (ModelNotFoundException $e) {
-        // Handle the case where the crop with the given ID is not found
-        return response()->json(['error' => 'Crop not found'], 404); // Customize the response as needed
+            // Get the variations that match the crop_id
+            $variations = Variation::where('crop_id', $id)->get();
+
+            return view('pages.edit', ['crop' => $crop, 'variations' => $variations]);
+        } catch (ModelNotFoundException $e) {
+            // Handle the case where the crop with the given ID is not found
+            return response()->json(['error' => 'Crop not found'], 404); // Customize the response as needed
+        }
     }
-}
 
 public function update(Request $request, $id)
 {

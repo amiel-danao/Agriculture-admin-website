@@ -5,7 +5,7 @@
 @section('style')
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Include your custom CSS file -->
+    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> Include your custom CSS file -->
 @endsection
 
 @section('content')
@@ -45,7 +45,7 @@
                     <div class="mb-3">
                         <label for="variations" class="form-label">Variations</label>
                         <div id="variations">
-                            @foreach ($crop->variations as $variation)
+                            @foreach ($variations as $variation)
                                 <div class="input-group mb-2">
                                     <input type="text" class="form-control" name="variations[]" value="{{ $variation->name }}">
                                     <button type="button" class="btn btn-danger btn-sm remove-variation">Remove Variation</button>
