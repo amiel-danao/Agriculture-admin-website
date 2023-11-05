@@ -15,7 +15,7 @@
     
 
     <!-- Scripts -->
-    <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css']) -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
     @yield('style')
     <style>
     .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
@@ -87,6 +87,18 @@
     .sidebar-link:hover {
         text-decoration: underline;
     }
+
+    .btn-success{
+        background-color: #008658 !important;
+    }
+    .btn-primary{
+        background-color: #0c6ef7 !important;
+    }
+
+    .btn-danger{
+        background-color: #e43943 !important;
+    }
+    
 </style>
 
 
