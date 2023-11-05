@@ -23,4 +23,4 @@ Route::post('/login', [AuthController::class, 'sendOTP']);
 Route::post('/verify-otp', [AuthController::class, 'verifyOTP']);
 
 
-Route::get('crops', [CropController::class, 'index']);
+Route::get('crops', [CropController::class, 'all']);
