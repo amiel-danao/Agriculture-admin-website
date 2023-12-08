@@ -81,6 +81,7 @@ Route::get('/settings', function () {
 })->middleware(['auth', 'verified', 'admin'])->name('settings');
 
 
+Route::post('/send-email', 'App\Http\Controllers\EmailController@sendEmail');
 
 
 Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('users.index');

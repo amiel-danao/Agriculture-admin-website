@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'http://127.0.0.1:8000/send-email',
+        'https://amaff-dce3f29acc84.herokuapp.com/send-email'
     ];
 }
