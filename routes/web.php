@@ -88,5 +88,8 @@ Route::get('users/index', 'App\Http\Controllers\UserController@index')->name('us
 
 Route::get('customer/index', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
 
+Route::get('/token', function () {
+    return csrf_token(); 
+});
 
 require __DIR__.'/auth.php';
